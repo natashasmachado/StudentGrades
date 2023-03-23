@@ -16,18 +16,14 @@ class Student {
     self.lastname = lastname
     self.firstname = firstname
   }
-  
-  func printName () -> String {
-    return firstname + lastname
-  }
 }
 
-class english: Student {
+class English: Student {
   private(set) var termPaper: Double
   private(set) var midTermE: Double
   private(set) var finalEnglish: Double
   
-  init(termPaper: Double, midTermE: Double, finalEnglish: Double , firstname: String , lastname: String) {
+  init(termPaper: Double, midTermE: Double, finalEnglish: Double , lastname: String , firstname: String) {
     self.termPaper = termPaper
     self.midTermE = midTermE
     self.finalEnglish = finalEnglish
@@ -36,22 +32,36 @@ class english: Student {
   }
   
   func aEnglishScore () -> Double {
-    let averagePaper = termPaper * (0.25)
-    let averageTerm = midTermE * (0.35)
-    let averageFinal = finalEnglish * (0.40)
-    let averageEnglish = averagePaper + averageTerm + averageFinal
-    return averageEnglish
-    
+      let averagePaper = termPaper * (0.25)
+      let averageTerm = midTermE * (0.35)
+      let averageFinal = finalEnglish * (0.40)
+      let averageEnglish = averagePaper + averageTerm + averageFinal
+      return Double(String(format: "%.2f", averageEnglish))!
+  }
+  
+  func letterGradeE() -> String {
+    switch aEnglishScore() {
+    case 90...100:
+      return "A"
+    case 80..<90:
+      return "B"
+    case 70..<80:
+      return "C"
+    case 60..<70:
+      return "D"
+    default:
+      return "F"
+    }
   }
 }
 
-class history: Student {
+class History: Student {
   private(set) var attendance: Double
   private(set) var project: Double
   private(set) var midTermH: Double
   private(set) var finalHistory: Double
   
-  init(attendance: Double , project: Double , midTermH: Double , finalHistory: Double , firstname: String , lastname: String) {
+  init(attendance: Double , project: Double , midTermH: Double , finalHistory: Double, lastname: String , firstname: String ) {
     self.attendance = attendance
     self.project = project
     self.midTermH = midTermH
@@ -65,11 +75,25 @@ class history: Student {
     let averageMidTerm = midTermH * (0.30)
     let averageFinalExam = finalHistory * (0.30)
     let averageHistory = averageAttendance + avarageProject + averageMidTerm + averageFinalExam
-    return averageHistory
+    return Double(String(format: "%.2f", averageHistory))!
+  }
+  func letterGradeH() -> String {
+    switch aHistoryScore() {
+    case 90...100:
+      return "A"
+    case 80..<90:
+      return "B"
+    case 70..<80:
+      return "C"
+    case 60..<70:
+      return "D"
+    default:
+      return "F"
+    }
   }
 }
 
-class math: Student {
+class Math: Student {
   private(set) var quiz1: Double
   private(set) var quiz2: Double
   private(set) var quiz3: Double
@@ -79,7 +103,7 @@ class math: Student {
   private(set) var test2: Double
   private(set) var finalMath: Double
   
-  init(quiz1: Double , quiz2: Double , quiz3: Double , quiz4: Double, quiz5: Double , test1: Double , test2: Double , finalMath: Double , firstname: String , lastname: String) {
+  init(quiz1: Double , quiz2: Double , quiz3: Double , quiz4: Double, quiz5: Double , test1: Double , test2: Double , finalMath: Double , lastname: String , firstname: String ) {
     self.quiz1 = quiz1
     self.quiz2 = quiz2
     self.quiz3 = quiz3
@@ -98,25 +122,28 @@ class math: Student {
     let averagetest2 = test2 * (0.25)
     let averageFinalMath = finalMath * (0.35)
     let averageMath = averageQuiz + averagetest1 + averagetest2 + averageFinalMath
-    return averageMath
+    return Double(String(format: "%.2f", averageMath))!
   }
   
+  func letterGradeM() -> String {
+    switch aMathScore () {
+    case 90...100:
+      return "A"
+    case 80..<90:
+      return "B"
+    case 70..<80:
+      return "C"
+    case 60..<70:
+      return "D"
+    default:
+      return "F"
+    }
+  }
 }
-//
-//init  letterGradeEnglish () -> String {
-//  var gradeA = 0
-//
-//  if averageEnglish || averageHistory || averageMath > 90 {
-//    let gradeA =+1
-//  }
-
 
 
 func formattedOut() -> String {
   var formated = ""
-  let welcome = "Student Grade Summary"
-  print(welcome.uppercased())
-  print("--------------------------")
   let studentName = "Student"
   let name = "\nName"
   let final = "Final"
@@ -136,54 +163,28 @@ func formattedOut() -> String {
   return formated
 }
 
- func input() -> String? {
-//   while true {
-      print("Please enter the name of the input file.")
-//      let lines = [readLine()]
-//      _ = lines.split(separator: "/n")
-//      let studentNumb = lines[0]
-////      return studentNumb
-//    }
-   var names = readLine()
-   var names1 = names?.components(separatedBy: ",")
-   let namess = names1?[1]
-   return namess
- }
+func studentsNum(_ inputString: String) -> [[String]] {
+  let lines = inputString.components(separatedBy: "\n").filter { !$0.isEmpty }
+  var outputArray = [[String]]()
+  for i in stride(from: 1, to: lines.count, by: 2) {
+    let numb = lines[i-1]
+    let studentN = [numb]
+    outputArray.append(studentN)
+  }
+  return outputArray
+}
+
+func input(_ inputString: String) -> [[String]] {
+  let lines = inputString.components(separatedBy: "\n").filter { !$0.isEmpty }
+  var outputArray = [[String]]()
+  for i in stride(from: 2, to: lines.count, by: 2) {
+    let name = lines[i-1]
+    let grades = lines[i].components(separatedBy: " ")
+    let studentArray = [name] + grades
+    outputArray.append(studentArray)
+  }
+  return outputArray
+}
 
 
 
-
-
-//static func formattedSong(title: String, artist: String, style: Song.Style? = nil, size: Int? = nil) -> String {
-//    var result = "| "
-//    result += title.padding(toLength: 36, withPad: " ", startingAt: 0)
-//    result += "| "
-//    result += artist.padding(toLength: 26, withPad: " ", startingAt: 0)
-//    result += "| "
-//    if let style = style {
-//      result += style.toFullName.padding(toLength: 12, withPad: " ", startingAt: 0)  // "Alternative" = 11 characters
-//    } else {
-//      result += "Style".padding(toLength: 12, withPad: " ", startingAt: 0)  // "Alternative" = 11 characters
-//    }
-//    result += "| "
-//    if let size = size {
-//      result += "\(String(format: "%.1f", Song.convertToMB(size)))"
-//    } else {
-//      result += "Size (MB)"
-//    }
-//    return result
-//  }
-
-
-
-//func categoryDetails(category: Song.Style) {
-//    menu() // Print the menu headers for the playlist details
-//    var song = 0
-//    var size = 0
-//    for i in songs {
-//      if i.category == category { // If the song have the category
-//        print(i.description)
-//        size += i.size
-//        song += 1
-//      }
-//    }
