@@ -16,7 +16,7 @@ let studentArray = input(inputString ?? "")
 
 print("Please enter the name of the output file.")
 let outputFilename = readLine()
-let output: String = "\(myFunction())"
+let output: String = "\(mainFunction())"
 if let dir = FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask).first {
   let fileURL = dir.appendingPathComponent(outputFilename ?? "", isDirectory: true)
   do {

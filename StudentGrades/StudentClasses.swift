@@ -163,16 +163,6 @@ func formattedOut() -> String {
   return formated
 }
 
-func studentsNum(_ inputString: String) -> [[String]] {
-  let lines = inputString.components(separatedBy: "\n").filter { !$0.isEmpty }
-  var outputArray = [[String]]()
-  for i in stride(from: 1, to: lines.count, by: 2) {
-    let numb = lines[i-1]
-    let studentN = [numb]
-    outputArray.append(studentN)
-  }
-  return outputArray
-}
 
 func input(_ inputString: String) -> [[String]] {
   let lines = inputString.components(separatedBy: "\n").filter { !$0.isEmpty }
@@ -186,7 +176,8 @@ func input(_ inputString: String) -> [[String]] {
   return outputArray
 }
 
-func myFunction() -> String {
+
+func mainFunction() -> String {
   var output: String {
     var students: [Student] = []
     for student in studentArray {
@@ -236,9 +227,8 @@ func myFunction() -> String {
       }
     }
     print("Student Grade Summary")
-    print("--------------------------")
+    print("--------------------------") // group students by class
     
-    // Group students by class
     var englishStudents = [English]()
     var historyStudents = [History]()
     var mathStudents = [Math]()
@@ -258,8 +248,7 @@ func myFunction() -> String {
       }
     }
     
-    // Print students by class
-    if !englishStudents.isEmpty {
+    if !englishStudents.isEmpty { // print students by class
       print("\nENGLISH CLASS\n")
       print(formattedOut())
       print("----------------------------------------------------------------------------------------")
@@ -310,7 +299,6 @@ func myFunction() -> String {
         }
       }
     }
-    
     
     if !mathStudents.isEmpty {
       print("\nMATH CLASS\n")
